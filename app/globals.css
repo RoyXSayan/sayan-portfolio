@@ -1,33 +1,51 @@
+/* Global styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  body {
+    @apply font-primary bg-primary text-white leading-loose;
+  }
+  .h1 {
+    @apply text-[48px] xl:text-[80px] leading-[1.1] font-semibold;
+  }
+  .h2 {
+    @apply text-[36px] xl:text-[48px] leading-[1.1] font-semibold;
+  }
+  .h3 {
+    @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
+  }
+  .text-outline {
+    -webkit-text-stroke: 1px #ffffff;
+  }
+  
+  .text-outline-hover {
+    -webkit-text-stroke: 1px #00ff99;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+
+/* Ensure the container spans align properly */
+
+  
+  /* Blinking cursor styling */
+  .blinking-cursor {
+    display: inline-block; /* Ensure it aligns with text */
+    position: relative; /* Position relative to container */
+    color: currentColor; /* Matches text color */
+    animation: blink 1s infinite step-start; /* Blinking animation */
+    font-size: 2rem; /* Adjust size to match text */
+    width: 0.1em; /* Adjust the width to make it thin */
+    height: 1em; /* Adjust the height to match text height */
+    margin-left: 0.2em; /* Add space between text and cursor */
   }
-}
+  
+  /* Keyframes for blinking effect */
+  @keyframes blink {
+    50% {
+      opacity: 0; /* Cursor fades out */
+    }
+  }
+  
