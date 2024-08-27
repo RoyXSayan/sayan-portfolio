@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 
-import { Swiper, swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 import { BsArrowUpRight, BsGithub } from "react-icons/bs";
@@ -55,7 +55,7 @@ const projects = [
   },
 ];
 
-const work = () => {
+const Work = () => {
   const [project, setProject] = useState(projects[0]);
 
   const handleSlideChange = (swiper) => {
@@ -171,4 +171,4 @@ const work = () => {
     </motion.section>
   );
 };
-export default work;
+export default Work;
