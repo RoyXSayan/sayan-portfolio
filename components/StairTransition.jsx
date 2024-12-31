@@ -18,6 +18,7 @@ const StairTransition = () => {
         pointer-events-none z-40 flex"
           >
             <Stairs />
+        
           </div>
 
           <motion.div

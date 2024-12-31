@@ -1,36 +1,34 @@
 "use client";
 
-import { BsArrowDownRight } from "react-icons/bs";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
+// Services Array with GIFs
 const services = [
   {
-    num: "01",
     title: "Web Development",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    href: "",
+    description:
+      "Bring your ideas to life with our cutting-edge Web Development services! I specialize in crafting modern, user-friendly, and fully responsive websites tailored to your unique needs.",
+    gif: "/assets/gif/Web-Dev.gif",
   },
   {
-    num: "02",
     title: "UI/UX Design",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    href: "",
+    description:
+      "Create impactful digital experiences with my UI/UX Design services! I specialize in designing intuitive, visually appealing, and user-centric interfaces that enhance user satisfaction and drive engagement.",
+    gif: "/assets/gif/UI.gif",
   },
   {
-    num: "03",
-    title: "Logo Design",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    href: "",
+    title: "Visual Branding Services",
+    description:
+      "Bring your brand to life with my Graphic Design Solutions! I specialize in creating eye-catching logos and stunning banners that leave a lasting impression. I also design cohesive visual identities that communicate your brand.",
+    gif: "/assets/gif/graphics-designer.gif",
   },
   {
-    num: "04",
-    title: "MS Office",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    href: "",
+    title: "Data Management & MS Office Mastery",
+    description:
+      "Unlock efficiency with my Digital Office Solutions! I specialize in transforming tedious administrative tasks into streamlined, high-quality outputs using the power of Microsoft Office.",
+    gif: "/assets/gif/office.gif",
   },
 ];
-
-import { easeIn, motion } from "framer-motion";
 
 const Services = () => {
   return (
@@ -42,35 +40,33 @@ const Services = () => {
             opacity: 1,
             transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
           }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-[60px]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[30px] px-4"
         >
-          {services.map((service, index) => {
-            return (
-              <div
-                key={index}
-                className="flex-1 flex flex-col justify-center gap-6 group "
-              >
-                {/* top */}
-                <div className="w-full flex justify-between items-center ">
-                  <div className="text-5xl font-extrabold text-outline text-transparent group-hover:text-outline-hover transition-all duration-500 ">
-                    {service.num}
-                  </div>
-                  <Link
-                    href={service.href}
-                    className="w-[70px] h-[70px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center hover:-rotate-45"
-                  >
-                    <BsArrowDownRight className="text-primary text-3xl "/>
-                  </Link>
-                </div>
-                {/* title */}
-                <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500 ">{service.title}</h2>
-                {/* description */}
-                <p className="text-white/60 ">{service.description}</p>
-                {/* border */}
-                <div className="border-b border-white/20 w-full "></div>
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="flex flex-col justify-between p-5 glass-effect h-[350px] overflow-hidden mb-4"
+            >
+              {/* GIF or Moving Image */}
+              <div className="flex justify-center mb-4">
+                <img
+                  src={service.gif}
+                  alt={`${service.title} GIF`}
+                  className="w-[180px] h-[180px] object-contain"
+                />
               </div>
-            );
-          })}
+
+              {/* Title */}
+              <h2 className="text-[22px] font-bold leading-none text-yellow-200 group-hover:text-yellow-300 transition-all duration-500 text-center mb-6">
+                {service.title}
+              </h2>
+
+              {/* Description */}
+              <p className="text-white/80 text-sm text-center mb-6">
+                {service.description}
+              </p>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

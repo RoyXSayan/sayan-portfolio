@@ -1,8 +1,9 @@
+
 import { animate, motion } from "framer-motion";
 
 //variants
 const stairAnimation = {
-  initail: {
+  initial: {
     top: "0%",
   },
   animate: {

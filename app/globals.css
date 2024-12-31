@@ -3,49 +3,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Base Styles */
 @layer base {
   body {
-    @apply font-primary bg-primary text-white leading-loose;
+    @apply font-primary bg-black text-white leading-loose;
+    transition: background 0.4s ease; /* Smooth background transition */
   }
+
   .h1 {
     @apply text-[48px] xl:text-[80px] leading-[1.1] font-semibold;
   }
+
   .h2 {
     @apply text-[36px] xl:text-[48px] leading-[1.1] font-semibold;
   }
+
   .h3 {
     @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
   }
+
   .text-outline {
     -webkit-text-stroke: 1px #ffffff;
   }
-  
+
   .text-outline-hover {
     -webkit-text-stroke: 1px #00ff99;
   }
 }
 
+/* Blinking cursor styling */
+.blinking-cursor {
+  animation: blink 1s steps(2, start) infinite;
+  color: currentColor;
+}
 
-
-/* Ensure the container spans align properly */
-
-  
-  /* Blinking cursor styling */
-  .blinking-cursor {
-    display: inline-block; /* Ensure it aligns with text */
-    position: relative; /* Position relative to container */
-    color: currentColor; /* Matches text color */
-    animation: blink 1s infinite step-start; /* Blinking animation */
-    font-size: 2rem; /* Adjust size to match text */
-    width: 0.1em; /* Adjust the width to make it thin */
-    height: 1em; /* Adjust the height to match text height */
-    margin-left: 0.2em; /* Add space between text and cursor */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
   }
-  
-  /* Keyframes for blinking effect */
-  @keyframes blink {
-    50% {
-      opacity: 0; /* Cursor fades out */
-    }
+  50% {
+    opacity: 0;
   }
-  
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+  background: linear-gradient(to right, #a855f7, #ec4899, #eab308, #ec4899, #a855f7, #ec4899, #eab308);
+  -webkit-background-clip: text; /* For Safari support */
+  background-size: 300% 300%;
+  background-clip: text;
+  color: transparent; /* Ensures the gradient is visible */
+}
+
+/* Custom Animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@layer utilities {
+  .animate-gradient {
+    animation: gradient 6s linear infinite;
+  }
+}
+
+.gradient-button {
+  padding: 15px 40px;
+  border: none;
+  outline: none;
+  color: #FFF;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 12px;
+}
+
+.gradient-button::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+/* glow */
+.gradient-button::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #FF0000, #FF7300, #FFFB00, #48FF00,
+    #00FFD5, #002BFF, #FF00C8, #FF0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height:  calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {background-position: 0 0;}
+  50% {background-position: 400% 0;}
+  100% {background-position: 0 0;}
+}
+
+/* hover */
+.gradient-button:hover::before {
+  opacity: 1;
+}
+
+.gradient-button:active:after {
+  background: transparent;
+}
+
+.gradient-button:active {
+  color: #000;
+  font-weight: bold;
+}
+
+/* hamburger menu */
+/* Glass Effect */
+.glass-effect {
+  @apply backdrop-blur-[10px] bg-white/30 border border-white/15 shadow-lg rounded-xl;
+}
+
+/* Optional: Add a subtle border and gradient effect to simulate the edges of glass */
+.glass-effect-container {
+  background: rgba(255, 255, 255, 0); /* Slight transparent white for a more subtle look */
+  backdrop-filter: blur(10px); /* Keep the blur subtle */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Slightly more transparent border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0); /* Soft shadow */
+}
+
+
