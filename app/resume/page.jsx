@@ -141,56 +141,38 @@ const skills = {
   description:
     "I combine creativity and technical expertise to craft seamless digital experiences. I specialize in building responsive, user-friendly interfaces. I deliver innovative, full-stack solutions that blend functionality with aesthetics.",
   skillList: [
-    {
-      icon: <FaHtml5 />,
-      name: "html 5",
-    },
-    {
-      icon: <FaCss3 />,
-      name: "css 3",
-    },
-    {
-      icon: <FaJs />,
-      name: "javascript",
-    },
-    {
-      icon: <SiMongodb />,
-      name: "mongodb",
-    },
-    {
-      icon: <SiExpress />,
-      name: "express.js",
-    },
-    {
-      icon: <FaReact />,
-      name: "react.js",
-    },
-    {
-      icon: <SiNextdotjs />,
-      name: "next.js",
-    },
-    {
-      icon: <SiTailwindcss />,
-      name: "tailwind.css",
-    },
-    {
-      icon: <FaNodeJs />,
-      name: "node.js",
-    },
-    {
-      icon: <SiThreedotjs />,
-      name: "Three.js",
-    },
-    {
-      icon: <FaFigma />,
-      name: "figma",
-    },
-    {
-      icon: <PiMicrosoftWordLogoFill />,
-      name: "Ms Word",
-    },
+    { icon: <FaHtml5 />, name: "html 5", level: 95 },
+    { icon: <FaCss3 />, name: "css 3", level: 90 },
+    { icon: <FaJs />, name: "javascript", level: 85 },
+    { icon: <SiMongodb />, name: "mongodb", level: 80 },
+    { icon: <SiExpress />, name: "express.js", level: 75 },
+    { icon: <FaReact />, name: "react.js", level: 90 },
+    { icon: <SiNextdotjs />, name: "next.js", level: 85 },
+    { icon: <SiTailwindcss />, name: "tailwind.css", level: 90 },
+    { icon: <FaNodeJs />, name: "node.js", level: 80 },
+    { icon: <SiThreedotjs />, name: "Three.js", level: 60 },
+    { icon: <FaFigma />, name: "figma", level: 70 },
+    { icon: <PiMicrosoftWordLogoFill />, name: "Ms Word", level: 95 },
   ],
 };
+
+const certifications = [
+  {
+    title: "Meta Front-End Developer",
+    org: "Coursera",
+    date: "2024",
+  },
+  {
+    title: "JavaScript Algorithms & DS",
+    org: "freeCodeCamp",
+    date: "2023",
+  },
+  {
+    title: "MongoDB for Developers",
+    org: "MongoDB University",
+    date: "2023",
+  },
+];
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -226,9 +208,15 @@ const Resume = () => {
             </TabsTrigger>
             <TabsTrigger value="education">Education</TabsTrigger>
             <TabsTrigger value="skills">Skills</TabsTrigger>
-            <TabsTrigger value="about">About me</TabsTrigger>
+            <TabsTrigger value="certifications">Certifications</TabsTrigger>
+
             {/* Add your SVG here */}
-            <DotLottieReact src="/assets/gif/lottie.lottie" loop autoplay />
+            <DotLottieReact
+              src="/assets/gif/lottie.lottie"
+              loop
+              autoplay
+              className="hidden lg:block"
+            />
           </TabsList>
 
           {/* content */}
@@ -272,7 +260,7 @@ const Resume = () => {
                 <p className="text-white/60 mx-auto xl:max-0">
                   {education.description}
                 </p>
-                <ScrollArea className="h-[400px]">
+                <ScrollArea className="h-[350px] px-6">
                   <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
                     {education.items.map((item, index) => {
                       return (
@@ -306,29 +294,59 @@ const Resume = () => {
                     {skills.description}
                   </p>
                 </div>
-                <ScrollArea className="h-[400px]">
-                  <ul className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4 xl:gap-[30px]">
-                    {skills.skillList.map((skill, index) => {
-                      return (
-                        <li key={index}>
-                          <TooltipProvider delayDuration={100}>
-                            <Tooltip>
-                              <TooltipTrigger className="w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group">
-                                <div className="text-6xl group-hover:text-accent transition-all duration-300">
-                                  {skill.icon}
-                                </div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="capitalize">{skill.name}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </li>
-                      );
-                    })}
+                <ScrollArea className="h-[350px] px-6">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {skills.skillList.map((skill, index) => (
+                      <motion.li
+                        key={index}
+                        className="bg-[#232329] rounded-xl p-5 flex flex-col items-center justify-center hover:shadow-lg transition-all duration-300"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <div className="text-5xl text-accent mb-4">
+                          {skill.icon}
+                        </div>
+                        <p className="capitalize text-white mb-2">
+                          {skill.name}
+                        </p>
+                        <div className="w-full bg-zinc-700 rounded-full h-2">
+                          <div
+                            className="bg-accent h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${skill.level}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-sm text-white/60 mt-1">
+                          {skill.level}%
+                        </span>
+                      </motion.li>
+                    ))}
                   </ul>
                 </ScrollArea>
               </div>
+            </TabsContent>
+
+            {/* Certifications */}
+            <TabsContent value="certifications">
+              <h3 className="text-4xl font-bold mb-4">Certifications</h3>
+              <ScrollArea className="h-[350px]">
+                <ul className="grid md:grid-cols-2 gap-6">
+                  {certifications.map((cert, index) => (
+                    <motion.li
+                      key={index}
+                      className="bg-[#232329] rounded-lg p-6"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <h4 className="text-xl font-semibold">{cert.title}</h4>
+                      <p className="text-white/60">{cert.org}</p>
+                      <span className="text-sm text-accent">{cert.date}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </ScrollArea>
             </TabsContent>
 
             {/* about */}
@@ -356,7 +374,6 @@ const Resume = () => {
                 </ul>
               </div>
             </TabsContent>
-            
           </div>
         </Tabs>
       </div>

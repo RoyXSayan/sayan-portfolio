@@ -1,4 +1,3 @@
-
 import { animate, motion } from "framer-motion";
 
 //variants
@@ -29,7 +28,8 @@ const Stairs = () => {
       creating a stagegered effect with decreasing delay for each subsequent step.
       */}
       {[...Array(6)].map((_, index) => {
-         return( <motion.div
+        return (
+          <motion.div
             key={index}
             variants={stairAnimation}
             initial="initial"
@@ -43,7 +43,7 @@ const Stairs = () => {
             className="h-full w-full bg-white relative"
           />
         );
-        })},
+      })}
     </>
   );
 };

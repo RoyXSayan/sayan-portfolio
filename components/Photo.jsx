@@ -12,30 +12,28 @@ const Photo = () => {
           transition: { delay: 2, duration: 0.4, ease: "easeIn" },
         }}
       >
-        {/* image */}
+        {/* Image */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
             transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
           }}
-          className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] mix-blend-lighten
-          absolute"
-          
-       >
+          className="w-[180px] h-[180px] xl:w-[300px] xl:h-[300px] mix-blend-lighten absolute"
+        >
           <Image
             src="/assets/image.png"
             priority
             quality={100}
             fill
-            alt=""
-            className="object-contain"
+            alt="Profile Image"
+            className="object-contain "
           />
         </motion.div>
 
-        {/* circle */}
+        {/* Circle */}
         <motion.svg
-          className="w-[300px] xl:w-[506px] h-[300px] xl:h-[506px]"
+          className="w-[180px] h-[180px] xl:w-[310px] xl:h-[310px] mt-10"
           fill="transparent"
           viewBox="0 0 506 506"
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +46,7 @@ const Photo = () => {
             strokeWidth="4"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{strokeDasharray: "24 10 0 0"}}
+            initial={{ strokeDasharray: "24 10 0 0" }}
             animate={{
               strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"],
               rotate: [120, 360],

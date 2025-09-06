@@ -1,11 +1,9 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules":{
+  "extends": ["next/core-web-vitals"],
+  "parser": "@typescript-eslint/parser", // Add this line (or just "espree" if you're not using TypeScript)
+  "rules": {
     "react/no-unescaped-entities": "off",
-    "@typescript-eslint/quotes" : "off",
     "quotes": [0],
-    "avoidEscape": 0,
-    "allowTemplateLiterals": 0,
     "no-useless-escape": 0
   }
 }

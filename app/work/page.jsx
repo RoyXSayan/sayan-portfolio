@@ -1,197 +1,159 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-
 import { BsArrowUpRight, BsGithub } from "react-icons/bs";
-
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import SearchAndFilter from "@/components/SearchAndFilter";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
-import Image from "next/image";
-import WorkSliderBtns from "@/components/WorkSliderBtns";
+import ProjectCard from "@/components/ProjectCard";
+import { Tag, Search } from "lucide-react";
 
-const projects = [
+const allProjects = [
   {
-    num: "01",
-    category: "frontend",
     title: "My Portfolio",
+    category: "Frontend",
     description:
-      "Crafted with precision and creativity, my portfolio is built using Next.js, Tailwind CSS, Framer Motion, and GSAP. It seamlessly combines performance, responsiveness, and engaging animations to deliver a visually stunning and interactive experience that reflects my passion for modern web development.",
-    stack: [{ name: "Next.js" }, { name: "Tailwind.Css" }, { name: "Framer-motion" }, {name: "GSAP"}],
-    image: "/assets/work/thumb1.png",
-    video: "/assets/video/portfolio.mp4",
-    live: "",
-    github: "",
+      "Crafted with Next.js, Tailwind CSS, Framer Motion, and GSAP. Fully responsive, animated, and performance-optimized.",
+    stack: ["Next.js", "Tailwind", "GSAP"],
+    image: "/assets/work/image.png",
+    github: "https://github.com/RoyXSayan/sayan-portfolio",
+    live: "https://sayan-portfolio-delta.vercel.app/",
+    featured: true,
   },
   {
-    num: "02",
-    category: "mern stack",
-    title: "Foodi",
+    title: "Foodi App",
+    category: "MERN",
     description:
-      "A feature-rich food ordering app built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Foodi offers a seamless user experience, allowing customers to browse menus, add items to their cart, and place orders with ease. Designed with responsiveness and scalability in mind.",
-    stack: [{ name: "MongoDB" }, { name: "Express.js" }, { name: "React.js" }, { name: "Node.js" }],
+      "Feature-rich food ordering app with cart, order tracking, and admin dashboard built using MERN stack.",
+    stack: ["MongoDB", "Express", "React", "Node"],
     image: "/assets/foodie.png",
-    video: "",
-    live: "",
     github: "",
+    live: "",
+    featured: true,
   },
   {
-    num: "03",
-    category: "fullstack",
     title: "VibeChat",
+    category: "Fullstack",
     description:
-      "VibeChat is a real-time chat application designed for seamless and interactive communication. Built using the MERN stack (MongoDB, Express, React, Node.js), it leverages Socket.io for instant message delivery and real-time updates.",
-    stack: [{ name: "MERN" },{ name: "Socket.io"}, { name: "Tailwind.css" }, { name: "Daisy UI" }],
+      "Real-time chat app with Socket.IO, message status, and secure auth.",
+    stack: ["Socket.io", "MongoDB", "React"],
     image: "/assets/Chat App.png",
-    video: null,
-    live: "",
     github: "",
+    live: "",
+    featured: false,
   },
   {
-    num: "",
-    category: "",
-    title: "Coming Soon",
-    description:"More projects coming soon...",
-    stack: [],
-    image: "",
-    video: "/assets/video/DREAMS.mp4",
-    live: "",
+    title: "Course LMS",
+    category: "Fullstack",
+    description:
+      "A full-featured learning platform with roles, payment, reviews, and progress tracking.",
+    stack: ["Next.js", "Stripe", "MongoDB"],
+    image: "/assets/lms.png",
     github: "",
+    live: "",
+    featured: false,
+  },
+  {
+    title: "File-Share",
+    category: "Frontend",
+    description:
+      "A minimal portfolio UI built with modern design principles and motion effects.",
+    stack: ["React", "Tailwind", "Framer Motion"],
+    image: "/assets/work/image2.png",
+    github: "",
+    live: "",
+    featured: false,
+  },
+  {
+    title: "AI Assistant UI",
+    category: "Frontend",
+    description:
+      "Chatbot frontend inspired by modern AI apps with animations and dark mode.",
+    stack: ["Next.js", "Tailwind"],
+    image: "/assets/work/thumb1.png",
+    github: "",
+    live: "",
+    featured: false,
   },
 ];
 
-const Work = () => {
-  const [project, setProject] = useState(projects[0]);
+const categories = ["All", "Frontend", "Fullstack", "MERN", "Others"];
 
-  const handleSlideChange = (swiper) => {
-    const currentIndex = swiper.activeIndex;
-    setProject(projects[currentIndex]);
-  };
+const Work = () => {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
+
+  const filteredProjects = allProjects.filter((project) => {
+    const matchesCategory = filter === "All" || project.category === filter;
+    const matchesSearch = project.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <motion.section
       initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
-      }}
-      className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
+      animate={{ opacity: 1, transition: { duration: 0.4 } }}
+      className="min-h-screen py-6 px-4 w-full max-w-7xl mx-auto"
     >
-      <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-          <div className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
-            <div className="flex flex-col gap-[30px] h-[50%]">
-              {/* Outline number */}
-              <div className="text-6xl leading-none font-extrabold text-transparent text-outline">
-                {project.num}
-              </div>
-              {/* Project title */}
-              <h2 className="text-4xl font-bold leading-none text-white group-hover:text-accent transition-all duration-500 capitalize tracking-wider">
-                {project.title}
-              </h2>
-
-              {/* Project category */}
-              <h3 className="text-lg font-semibold text-accent/70 capitalize tracking-wide">
-                {project.category} Project
-              </h3>
-              
-              {/* Project description */}
-              <p className="text-white/60">{project.description}</p>
-              {/* Stack */}
-              <ul className="flex gap-4">
-                {project.stack.map((item, index) => (
-                  <li key={index} className="text-xl text-accent">
-                    {item.name}
-                    {index !== project.stack.length - 1 && ","}
-                  </li>
-                ))}
-              </ul>
-              {/* Border */}
-              <div className="border border-white/20"></div>
-              {/* Buttons */}
-              <div className="flex items-center gap-4">
-                {/* Live project button */}
-                <Link href={project.live}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                        <BsArrowUpRight className="text-white text-3xl group-hover:text-accent" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Live Project</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
-                {/* Github project button */}
-                <Link href={project.github}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                        <BsGithub className="text-white text-3xl group-hover:text-accent" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Github Repository</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="w-full xl:w-[50%]">
-            <Swiper
-              spaceBetween={30}
-              slidesPerView={1}
-              className="xl:h-[520px] mb-12"
-              onSlideChange={handleSlideChange}
-            >
-              {projects.map((project, index) => (
-                <SwiperSlide key={index} className="w-full">
-                  <div className="h-[460px] relative group flex justify-center items-center bg-pink-50/20">
-                    {/* Overlay */}
-                    <div className="absolute top-0 bottom-0 w-full h-full bg-black/10 z-10"></div>
-                    {/* Media: Image or Video */}
-                    <div className="relative w-full h-full bg-black">
-                      {project.video ? (
-                        <video
-                          src={project.video}
-                          className="object-contain w-full h-full"
-                          autoPlay
-                          loop
-                          muted // Ensure autoplay works in most browsers
-                          playsInline // Optional: Ensures it works well on mobile
-                        ></video>
-                      ) : (
-                        <Image
-                          src={project.image}
-                          fill
-                          className="object-contain"
-                          alt=""
-                        />
-                      )}
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-              {/* Slider Buttons */}
-              <WorkSliderBtns
-                containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all"
-              />
-            </Swiper>
-          </div>
-        </div>
+      {/* Heading */}
+      <div className="text-center mb-10">
+        <h2 className="text-4xl font-bold text-accent">Projects & Portfolio</h2>
+        <p className="text-white/60 text-base max-w-xl mx-auto mt-2">
+          A showcase of my recent work and applications that demonstrate my
+          skills and experience.
+        </p>
       </div>
+
+      {/* Search + Filter */}
+      <SearchAndFilter
+        search={search}
+        setSearch={setSearch}
+        filter={filter}
+        setFilter={setFilter}
+        filterOptions={categories}
+      />
+
+      {/* Projects */}
+      <div className="w-full max-w-7xl mx-auto px-2 mb-20">
+        <ProjectCard projects={filteredProjects} />
+      </div>
+
+      {/* CTA Box */}
+      <motion.div
+        className="bg-gradient-to-br from-[#1a1a1c] to-[#121212] border border-white/10 p-8 rounded-xl text-center max-w-3xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h3 className="text-2xl font-bold mb-4 text-white">
+          Interested in my work?
+        </h3>
+        <p className="text-white/60 mb-6">
+          I'm always working on new projects. Feel free to check out my GitHub
+          for more examples of my code.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="https://github.com/RoyXSayan" target="_blank">
+            <Button className="w-full sm:w-auto">View GitHub</Button>
+          </Link>
+          <Link href="/contact">
+            <Button variant="outline" className="w-full sm:w-auto">
+              Discuss a Project
+            </Button>
+          </Link>
+        </div>
+      </motion.div>
     </motion.section>
   );
 };
